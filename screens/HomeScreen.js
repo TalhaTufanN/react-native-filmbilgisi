@@ -1,7 +1,7 @@
 import { StatusBar, Text, View, TouchableOpacity, Image, ScrollView, Platform} from 'react-native'
 import React, {useState} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline'
+import { Bars3Icon, MagnifyingGlassIcon } from 'react-native-heroicons/outline'
 import { styles } from '../theme/theme'
 import TrendingMovies from '../components/TrendingMovies'
 import MovieList from '../components/MovieList'
@@ -16,8 +16,8 @@ export default function HomeScreen() {
       {/* Arama bölümü ve logo*/}
       <SafeAreaView className={ios?"-mb-2": "mb-2"}>
         <StatusBar style="light" />
-          <View className="flex-row justify-between items-center mx-1">
-            <Bars3CenterLeftIcon size="30" strokeWidth={2} color="white"/>
+          <View className="flex-row justify-between items-center bg-neutral-800 py-1">
+            <Bars3Icon size="30" strokeWidth={2} color="white"/>
             <Text className="text-yellow-100 text-3xl font-bold">
               <Text style={styles.text}>Filmovie</Text>
               TR

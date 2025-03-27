@@ -3,23 +3,27 @@ import { View, Text, TouchableWithoutFeedback, Dimensions, Image } from 'react-n
 import Carousel from 'react-native-reanimated-carousel'
 import Animated from 'react-native-reanimated'
 import { useNavigation } from '@react-navigation/native'
+import { Platform } from 'react-native'
 
-// const { width: screenWidth } = Dimensions.get('window');
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+const ios=Platform.OS=="ios"
 
 export default function TrendingMovies({data}) {
   const navigation = useNavigation()
-  const handleClick = () => {
+  const handleClick = (item) => {
     navigation.navigate('Movie',item)
   }
   return (
     <View justifyContent="center">
-        <Text className="text-white text-xl mt-5 font-black mx-5 ">Trend Filmler</Text>
+      <View className="bg-neutral-800"> 
+        <Text className="text-white text-xl p-1 font-black mx-4">Trend Filmler</Text>
+      </View>
+      
         <View dataSet={{ kind: "basic-layouts", name: "parallax" }} id="carousel-component">
         
           <Carousel
-            loop={false}
+            loop={true}
             width={windowWidth}
             mode="parallax"
             modeConfig={{
@@ -43,7 +47,7 @@ export default function TrendingMovies({data}) {
 
 const MovieCard = ({item,handleClick}) => {
     return (
-        <TouchableWithoutFeedback onPress={handleClick} >
+        <TouchableWithoutFeedback onPress={()=>handleClick(item)} >
           <Image 
             source={require('../assets/image2.jpg')}
             style={{ width: windowWidth*0.6, height: windowHeight * 0.4, borderRadius: windowWidth*0.06 }}

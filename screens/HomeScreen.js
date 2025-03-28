@@ -5,12 +5,14 @@ import { Bars3Icon, MagnifyingGlassIcon } from 'react-native-heroicons/outline'
 import { styles } from '../theme/theme'
 import TrendingMovies from '../components/TrendingMovies'
 import MovieList from '../components/MovieList'
+import { useNavigation } from '@react-navigation/native'
 
 const ios=Platform.OS=="ios"
 export default function HomeScreen() {
   const [trending, setTrending] = useState([1,2,3])
   const [upcoming, setUpcoming] = useState([1,2,3])
   const [topRated, setTopRated] = useState([1,2,3])
+  const navigation = useNavigation()
   return (
     <View className="flex-1 bg-neutral-900 p-1">
       {/* Arama bölümü ve logo*/}
@@ -23,7 +25,7 @@ export default function HomeScreen() {
               TR
               <Text style={styles.text}></Text>
             </Text>
-            <TouchableOpacity> 
+            <TouchableOpacity onPress={()=>navigation.navigate("Search")}>
               <MagnifyingGlassIcon size="30" strokeWidth={2} color="white"/>
             </TouchableOpacity>
           </View>

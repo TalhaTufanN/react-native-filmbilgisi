@@ -4,6 +4,7 @@ import Carousel from 'react-native-reanimated-carousel'
 import Animated from 'react-native-reanimated'
 import { useNavigation } from '@react-navigation/native'
 import { Platform } from 'react-native'
+import { image500 } from '../api/moviedb'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -23,7 +24,7 @@ export default function TrendingMovies({data}) {
         <View dataSet={{ kind: "basic-layouts", name: "parallax" }} id="carousel-component">
         
           <Carousel
-            loop={true}
+            loop={false}
             width={windowWidth}
             mode="parallax"
             modeConfig={{
@@ -34,8 +35,8 @@ export default function TrendingMovies({data}) {
             data={data}
             scrollAnimationDuration={1000}
             renderItem={({item}) => <MovieCard item={item} handleClick={handleClick}/>}
-            autoPlay={true}
-            autoPlayInterval={1000}
+            autoPlay={false}
+            // autoPlayInterval={1000}
             pagingEnabled={true}
             snapToAlignment="center"
           />
@@ -46,10 +47,12 @@ export default function TrendingMovies({data}) {
 }
 
 const MovieCard = ({item,handleClick}) => {
+    // console.log('item.poster_path',item.poster_path);
     return (
         <TouchableWithoutFeedback onPress={()=>handleClick(item)} >
           <Image 
-            source={require('../assets/image2.jpg')}
+            // source={require('../assets/image2.jpg')}
+            source={{uri:image500(item.poster_path)}}
             style={{ width: windowWidth*0.6, height: windowHeight * 0.4, borderRadius: windowWidth*0.06 }}
             resizeMode="cover"
           />

@@ -8,7 +8,8 @@ import { styles } from '../theme/theme';
 import { LinearGradient } from 'expo-linear-gradient';
 import Cast from '../components/Cast';
 import MovieList from '../components/MovieList';
-
+import Loading from '../components/Loading';
+import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, image500 } from '../api/moviedb';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -19,18 +20,59 @@ export default function MovieScreen() {
     const navigation = useNavigation();
     const [isFavourite, toggleFavourite] = useState(false);
     let movieName="The Green Mile"
-    const [cast, setCast] = useState([1,2,3,4,5]);
+    const [cast, setCast] = useState([]);
     const [similarMovies, setSimilarMovies] = useState([1,2,3,4,5]);
-
+    const [loading , setLoading] = useState(false);
+    const [movie,setMovie] = useState();
     useEffect(() => {
-        // Apiden film bilgilerini çekeceğiz.
-    }, [item])
+        // console.log('itemid: ',item.id)
+        setLoading(true);
+        getMovieDetails(item.id);
+        getMovieCredits(item.id);
+        getSimilarMovies(item.id);
+    }, [item]);
+
+    const getMovieDetails = async (id) => {  // Parametreyi parantez içine alın
+        try {
+            const data = await fetchMovieDetails(id);  // id'yi parametre olarak gönder
+            // console.log('got movie details: ', data);
+            if (data) setMovie(data)
+            setLoading(false);
+        } catch (error) {
+            console.error('Movie details fetch error: ', error);
+            setLoading(false);
+        }
+    }
+
+    const getMovieCredits = async (id) => {  // Parametreyi parantez içine alın
+        try {
+            const data = await fetchMovieCredits(id);  // id'yi parametre olarak gönder
+            // console.log('got movie credits: ', data);
+            if (data && data.cast) setCast(data.cast);
+            setLoading(false);
+        } catch (error) {
+            console.error('Movie credits fetch error: ', error);
+            setLoading(false);
+        }
+    }
+
+    const getSimilarMovies = async (id) => {  // Parametreyi parantez içine alın
+        try {
+            const data = await fetchSimilarMovies(id);  // id'yi parametre olarak gönder
+            // console.log('got movie credits: ', data);
+            if (data && data.results) setSimilarMovies(data.results);
+            setLoading(false);
+        } catch (error) {
+            console.error('Movie credits fetch error: ', error);
+            setLoading(false);
+        }
+    }
+
 
   return (
     <ScrollView
     contentContainerStyle={{paddingBottom: 20}}
     className="bg-neutral-900 flex-1"
-
     >
     {/* Geri butonu ve film afişi */}
     <View classname="w-full">
@@ -42,51 +84,69 @@ export default function MovieScreen() {
                 <HeartIcon size="30" strokeWidth={2} strokeOpacity={1} stroke={isFavourite ? "white" : "white"}  fill={isFavourite? "white":"transparent"}/>
             </TouchableOpacity>
         </SafeAreaView>
-        <View>
-            <Image
-            source={require('../assets/image3.jpg')}
-            style={{ width: windowWidth, height: windowHeight*0.5 }}
-            />
-            <LinearGradient
-            colors={['transparent', 'rgba(23,23,23,0.5)', 'rgba(23,23,23,1)']}
-            style={{width:windowWidth, height: windowHeight*0.5}}
-            start={{ x: 0.5, y: 0 }}
-            end={{ x: 0.5, y: 1 }}
-            className="absolute bottom-0"
-            />
-        </View>
+    {
+        loading?(
+            <Loading />
+        ):(
+            <View>
+                <Image
+                // source={require('../assets/image3.jpg')}
+                source={{uri:image500(movie?.poster_path) || fallbackMoviePoster}}
+                style={{ width: windowWidth, height: windowHeight*0.5 }}
+                />
+                <LinearGradient
+                colors={['transparent', 'rgba(23,23,23,0.5)', 'rgba(23,23,23,1)']}
+                style={{width:windowWidth, height: windowHeight*0.5}}
+                start={{ x: 0.5, y: 0 }}
+                end={{ x: 0.5, y: 1 }}
+                className="absolute bottom-0"
+                />
+            </View>
+        )
+    }
     </View>
+    
     {/* Film bilgileri */}
     <View style={{marginTop: -windowHeight*0.09}} className="space-y-3">
         {/* Film Başlığı */}
         <Text className="text-white text-3xl font-bold text-center tracking-wider">
-            {movieName}
+            {movie?.title}
         </Text>
         {/* Bazı Bilgiler */}
+        {
+            movie?.id?(
         <Text className="text-neutral-400 font-semibold text-base text-center">
-            Yayımlanma - 1999 - 189 dk
+            Yayımlanma - {movie?.release_date?.split('-')[0]} - {movie?.runtime} dk
         </Text>
-        {/* Tür */}
+            ):null
+            
+        }
+        {/* Türler */}
+
         <View className="flex-row justify-center mx-4 space-x-2">
-            <Text className="text-neutral-400 font-semibold text-base text-center">
-                Drama  -
-            </Text>
-            <Text className="text-neutral-400 font-semibold text-base text-center">
-                Gerilim  - 
-            </Text>
-            <Text className="text-neutral-400 font-semibold text-base text-center">
-                Suç
-            </Text>
+            {
+                movie?.genres?.map((genre,index)=>{
+                    let showMinus=index+1 != movie.genres.length;
+                    return (
+                        <Text key={index} className="text-neutral-400 font-semibold text-base text-center">
+                            {genre?.name}  {showMinus?"-":null}
+                        </Text>
+                    )
+                })
+            }
+
         </View>
         {/* Açıklama  */}
         <Text className="text-neutral-400 mx-4 tracking-wide">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et felis at nunc ultricies ultricies. Nullam nec est et mi auctor posuere.
+            {
+                movie?.overview
+            }
         </Text>
     </View>
     {/* Oyuncular */} 
-    <Cast navigation={navigation} cast={cast} />
+    {cast.length>0 && <Cast navigation={navigation} cast={cast} />}
     {/* Benzer filmler */}
-    <MovieList title="Benzer Filmler" hideSeeAll={true} data={similarMovies}/>
+    {similarMovies.length>0 && <MovieList title="Benzer Filmler" hideSeeAll={true} data={similarMovies}/>}
 
     </ScrollView>
   )

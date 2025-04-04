@@ -17,7 +17,6 @@ const windowHeight = Dimensions.get("window").height;
 
 export default function MovieList({ title, data, hideSeeAll }) {
   const navigation = useNavigation();
-  let movieName = "The Green Mile";
   return (
     <View className="mb-8 space-y-4">
       <View className="flex-row justify-between items-center bg-neutral-900 py-2 border-b-2 border-t-2 border-neutral-800">

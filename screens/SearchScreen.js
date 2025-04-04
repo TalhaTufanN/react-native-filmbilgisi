@@ -2,7 +2,6 @@ import {
   View,
   Text,
   Dimensions,
-  Platform,
   SafeAreaView,
   TextInput,
   TouchableOpacity,
@@ -20,13 +19,11 @@ import { fallbackMoviePoster, image185, SearchMovies } from "../api/moviedb";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-const ios = Platform.OS == "ios";
 
 export default function SearchScreen() {
   const navigation = useNavigation();
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  let movieName = "The Green Mile";
   const handleSearch = (value) => {
     if (value && value.length > 2) {
       setLoading(true),
@@ -37,7 +34,7 @@ export default function SearchScreen() {
           page: "1",
         }).then((data) => {
           setLoading(false);
-          console.log("filmler bolundu: ", data);
+          // console.log("filmler bolundu: ", data);
           if (data && data.results) setResults(data.results);
         });
     } else {

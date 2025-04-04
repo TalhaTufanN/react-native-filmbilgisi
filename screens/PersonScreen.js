@@ -2,23 +2,25 @@ import {
   View,
   Text,
   Dimensions,
-  Platform,
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
   Image,
 } from "react-native";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronLeftIcon } from "react-native-heroicons/outline";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { HeartIcon } from "react-native-heroicons/solid";
 import MovieList from "../components/MovieList";
 import Loading from "../components/Loading";
-import { fetchPersonDetails, fetchPersonMovies, image342 } from "../api/moviedb";
+import {
+  fetchPersonDetails,
+  fetchPersonMovies,
+  image342,
+} from "../api/moviedb";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-const ios = Platform.OS == "ios";
 export default function PersonScreen() {
   const { params: item } = useRoute();
   const navigation = useNavigation();
@@ -32,7 +34,6 @@ export default function PersonScreen() {
     // console.log('person',item)
     getPersonDetails(item.id);
     getPersonMovies(item.id);
-
   }, [item]);
 
   const getPersonDetails = async (id) => {
@@ -145,7 +146,11 @@ export default function PersonScreen() {
 
           {/* Filmleri */}
           <View className="mt-6">
-            <MovieList data={personMovies} hideSeeAll={true} title={"Oynadığı Diğer Filmler"}/>
+            <MovieList
+              data={personMovies}
+              hideSeeAll={true}
+              title={"Oynadığı Diğer Filmler"}
+            />
           </View>
         </View>
       )}

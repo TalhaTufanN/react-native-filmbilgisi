@@ -48,8 +48,8 @@ export default function TrendingMovies({ data }) {
           renderItem={({ item }) => (
             <MovieCard item={item} handleClick={handleClick} />
           )}
-          autoPlay={false}
-          // autoPlayInterval={1000}
+          autoPlay={true}
+          autoPlayInterval={1000}
           pagingEnabled={true}
           snapEnabled={true}
           snapToAlignment="center"

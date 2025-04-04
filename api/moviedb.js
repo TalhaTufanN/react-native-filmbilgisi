@@ -35,11 +35,11 @@ export const fallbackMoviePoster =
 export const fallbackPersonImage =
   "https://e7.pngegg.com/pngimages/813/118/png-clipart-silhouette-icon-blank-person-template-share-icon-black-and-white.png";
 
-const apiCall = async (endpoints, params) => {
+const apiCall = async (endpoints, params={},language = 'tr-TR') => {
   const options = {
     method: "GET",
     url: endpoints,
-    params: params ? params : {},
+    params: { ...params, language },
   };
   try {
     const response = await axios.request(options);

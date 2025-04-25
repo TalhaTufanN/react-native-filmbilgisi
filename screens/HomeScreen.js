@@ -3,7 +3,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
   ScrollView,
   Platform,
 } from "react-native";
@@ -36,20 +35,30 @@ export default function HomeScreen() {
   }, []);
 
   const getTrendMovies = async () => {
-    const data = await fetchTrendingMovies();
-    // console.log('Trend filmler: ',data);
-    if (data && data.results) setTrending(data.results);
-    setLoading(false);
+    try {
+      const data = await fetchTrendingMovies();
+      if (data && data.results) setTrending(data.results);
+    } catch (error) {
+      alert("TrendMovies HATASI: " + error.message);
+    } finally {
+      setLoading(false);
+    }
   };
   const getUpcomingMovies = async () => {
-    const data = await fetchUpcomingMovies();
-    // console.log('Yakındaki filmler: ',data);
-    if (data && data.results) setUpcoming(data.results);
+    try {
+      const data = await fetchUpcomingMovies();
+      if (data && data.results) setUpcoming(data.results);
+    } catch (error) {
+      alert("UpcomingMovies HATASI: " + error.message);
+    }
   };
   const getTopRatedMovies = async () => {
-    const data = await fetchTopRatedMovies();
-    // console.log('Top filmler: ',data);
-    if (data && data.results) setTopRated(data.results);
+    try {
+      const data = await fetchTopRatedMovies();
+      if (data && data.results) setTopRated(data.results);
+    } catch (error) {
+      alert("TopRatedMovies HATASI: " + error.message);
+    }
   };
 
   return (
@@ -57,15 +66,22 @@ export default function HomeScreen() {
       {/* Arama bölümü ve logo*/}
       <SafeAreaView className={ios ? "-mb-2" : "mb-2"}>
         <StatusBar style="light" />
-        <View className="flex-row justify-between items-center bg-neutral-800 py-1">
-          <Bars3Icon size="30" strokeWidth={2} color="white" />
-          <Text className="text-yellow-100 text-3xl font-bold">
-            <Text style={styles.text}>Filmovie</Text>
-            TR
+        <View className="flex-row justify-between items-center bg-neutral-900 py-1">
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <View className="p-2 bg-neutral-800 rounded-r-full">
+              <Bars3Icon size="30" strokeWidth={2} color="white" />
+            </View>
+          </TouchableOpacity>
+
+          <Text className="text-yellow-300 text-3xl font-bold">
+            <Text style={styles.text}>Film</Text>
+            Bilgisi
             <Text style={styles.text}></Text>
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate("Search")}>
-            <MagnifyingGlassIcon size="30" strokeWidth={2} color="white" />
+            <View className="p-2 rounded-full bg-black">
+              <MagnifyingGlassIcon size="30" strokeWidth={2} color="white" />
+            </View>
           </TouchableOpacity>
         </View>
       </SafeAreaView>

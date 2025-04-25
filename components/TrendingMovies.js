@@ -23,7 +23,7 @@ export default function TrendingMovies({ data }) {
 
   return (
     <View justifyContent="center">
-      <View className="bg-neutral-800 border border-l-2 border-r-2 border-y-neutral-900 border-x-cyan-50 ">
+      <View className="bg-neutral-900 border-b-2 border-y-neutral-800">
         <Text className="text-cyan-50 text-xl p-1 font-black self-center">
           Trend Filmler
         </Text>

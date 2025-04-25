@@ -31,9 +31,9 @@ export const image185 = (path) =>
   path ? `https://image.tmdb.org/t/p/w185${path}` : null;
 
 export const fallbackMoviePoster =
-  "https://i.pinimg.com/474x/5e/22/82/5e22823ec81bae46cc44a2ce507e7fd4.jpg";
+  "https://r.resimlink.com/9ix-rmG3Kc.jpg?v=b4210962054a41689c8c020e9083dddc";
 export const fallbackPersonImage =
-  "https://e7.pngegg.com/pngimages/813/118/png-clipart-silhouette-icon-blank-person-template-share-icon-black-and-white.png";
+  "https://r.resimlink.com/9ix-rmG3Kc.jpg?v=b4210962054a41689c8c020e9083dddc";
 
 const apiCall = async (endpoints, params={},language = 'tr-TR') => {
   const options = {
@@ -45,7 +45,18 @@ const apiCall = async (endpoints, params={},language = 'tr-TR') => {
     const response = await axios.request(options);
     return response.data;
   } catch (error) {
-    console.log("error: ", error);
+    if (error.response) {
+      // Server cevapladı fakat başarısız durum kodu döndü
+      console.log("Error data:", error.response.data);
+      console.log("Error status:", error.response.status);
+    } else if (error.request) {
+      // İstek yapıldı ancak cevap alınamadı
+      console.log("Error request:", error.request);
+    } else {
+      // İstek oluşturulurken hata oluştu
+      console.log("Error message:", error.message);
+    }
+    console.log("Error config:", error.config);
     return {};
   }
 };

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "FilmovieTR",
-    "slug": "FilmovieTR",
+    "name": "FilmBilgisi",
+    "slug": "FilmBilgisi",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,15 +21,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.gr1zzwor.FilmovieTR"
+      "package": "com.gr1zzwor.FilmBilgisi"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "f03ac2b1-ff42-4c1c-b8d8-97824ed74429"
+        "projectId": "2c6247d8-4dc7-4b23-83b5-3ffd80045f93"
       }
-    }
+    },
+    "owner": "gr1zzwor"
   }
 }

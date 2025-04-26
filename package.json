@@ -1,5 +1,5 @@
 {
-  "name": "filmovietr",
+  "name": "filmbilgisi",
   "license": "0BSD",
   "version": "1.0.0",
   "main": "index.js",
@@ -7,7 +7,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "postinstall": "npx expo-yarn-workspaces postinstall"
   },
   "dependencies": {
     "@react-navigation/drawer": "^7.3.9",
@@ -26,6 +27,7 @@
     "react-native-dotenv": "^3.4.11",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-heroicons": "^4.0.0",
+    "react-native-paper": "^5.12.1",
     "react-native-progress": "^5.0.1",
     "react-native-reanimated": "~3.16.1",
     "react-native-reanimated-carousel": "^4.0.2",
@@ -36,7 +38,8 @@
     "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9"
   },
   "private": true
 }

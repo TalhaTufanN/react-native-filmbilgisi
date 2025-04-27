@@ -52,12 +52,13 @@ const apiCall = async (endpoints, params={},language = 'tr-TR') => {
     } else if (error.request) {
       // İstek yapıldı ancak cevap alınamadı
       console.log("Error request:", error.request);
+      console.log("Network error - Please check your internet connection");
     } else {
       // İstek oluşturulurken hata oluştu
       console.log("Error message:", error.message);
     }
     console.log("Error config:", error.config);
-    return {};
+    throw error;
   }
 };
 

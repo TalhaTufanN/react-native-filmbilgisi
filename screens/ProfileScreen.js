@@ -14,7 +14,7 @@ const ios = Platform.OS == "ios";
 export default function ProfileScreen() {
   const navigation = useNavigation();
   return (
-    <View>
+    <View className="flex-1 bg-neutral-900">
       <SafeAreaView className={ios ? "-mb-2" : "mb-2"}>
         <StatusBar style="light" />
         <View className="flex-row items-center bg-neutral-900 py-1 px-2">

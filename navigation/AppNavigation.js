@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -71,7 +71,7 @@ export default function AppNavigation() {
           options={{
             headerShown: false,
             drawerIcon: ({ color, size }) => (
-              <HomeIcon size={size} color={color} /> // Ana sayfa için ikon
+              <HomeIcon size={size} color={color} /> 
             ),
           }}
         />
@@ -80,7 +80,7 @@ export default function AppNavigation() {
           component={ProfileScreen}
           options={{
             drawerIcon: ({ color, size }) => (
-              <UserIcon size={size} color={color} /> // Ana sayfa için ikon
+              <UserIcon size={size} color={color} /> 
             ),
           }}
         />
@@ -89,7 +89,7 @@ export default function AppNavigation() {
           component={FavouritesScreen}
           options={{
             drawerIcon: ({ color, size }) => (
-              <StarIcon size={size} color={color} /> // Ana sayfa için ikon
+              <StarIcon size={size} color={color} /> 
             ),
           }}
         />
@@ -98,7 +98,7 @@ export default function AppNavigation() {
           component={SettingsScreen}
           options={{
             drawerIcon: ({ color, size }) => (
-              <Cog6ToothIcon size={size} color={color} /> // Ana sayfa için ikon
+              <Cog6ToothIcon size={size} color={color} /> 
             ),
           }}
         />

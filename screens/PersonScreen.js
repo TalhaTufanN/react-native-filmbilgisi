@@ -18,6 +18,7 @@ import {
   fetchPersonMovies,
   image342,
 } from "../api/moviedb";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -34,7 +35,47 @@ export default function PersonScreen() {
     // console.log('person',item)
     getPersonDetails(item.id);
     getPersonMovies(item.id);
+    checkFavouriteStatus(item.id);
   }, [item]);
+
+  const checkFavouriteStatus = async (id) => {
+    try {
+      const savedPersons = await AsyncStorage.getItem("@favourite_persons");
+      let favouritePersons = savedPersons ? JSON.parse(savedPersons) : [];
+      const isFav = favouritePersons.some((p) => p.id === id);
+      setFavourite(isFav);
+    } catch (error) {
+      console.log("Error reading favourite status:", error);
+    }
+  };
+
+  const handleToggleFavourite = async () => {
+    try {
+      const savedPersons = await AsyncStorage.getItem("@favourite_persons");
+      let favouritePersons = savedPersons ? JSON.parse(savedPersons) : [];
+
+      if (isFavourite) {
+        // Remove from favorites
+        favouritePersons = favouritePersons.filter((p) => p.id !== item.id);
+      } else {
+        // Add to favorites
+        const personToSave = {
+          id: item.id,
+          name: person?.name || item.name,
+          profile_path: person?.profile_path || item.profile_path,
+        };
+        favouritePersons.push(personToSave);
+      }
+
+      await AsyncStorage.setItem(
+        "@favourite_persons",
+        JSON.stringify(favouritePersons),
+      );
+      setFavourite(!isFavourite);
+    } catch (error) {
+      console.log("Error toggling favourite status:", error);
+    }
+  };
 
   const getPersonDetails = async (id) => {
     const data = await fetchPersonDetails(id);
@@ -61,10 +102,7 @@ export default function PersonScreen() {
           <ChevronLeftIcon size="30" strokeWidth={2.5} color="white" />
         </TouchableOpacity>
         <Text className="text-white text-xl p-1 font-black mx-4">Oyuncu</Text>
-        <TouchableOpacity
-          onPress={() => setFavourite(!isFavourite)}
-          className="p-1"
-        >
+        <TouchableOpacity onPress={handleToggleFavourite} className="p-1">
           <HeartIcon
             size="30"
             strokeWidth={2}

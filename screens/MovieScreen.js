@@ -22,6 +22,7 @@ import {
   fetchSimilarMovies,
   image500,
 } from "../api/moviedb";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -40,7 +41,49 @@ export default function MovieScreen() {
     getMovieDetails(item.id);
     getMovieCredits(item.id);
     getSimilarMovies(item.id);
+    checkFavouriteStatus(item.id);
   }, [item]);
+
+  const checkFavouriteStatus = async (id) => {
+    try {
+      const savedMovies = await AsyncStorage.getItem("@favourite_movies");
+      let favouriteMovies = savedMovies ? JSON.parse(savedMovies) : [];
+      const isFav = favouriteMovies.some((movie) => movie.id === id);
+      toggleFavourite(isFav);
+    } catch (error) {
+      console.log("Error reading favourite status:", error);
+    }
+  };
+
+  const handleToggleFavourite = async () => {
+    try {
+      const savedMovies = await AsyncStorage.getItem("@favourite_movies");
+      let favouriteMovies = savedMovies ? JSON.parse(savedMovies) : [];
+
+      if (isFavourite) {
+        // Remove from favorites
+        favouriteMovies = favouriteMovies.filter(
+          (movie) => movie.id !== item.id,
+        );
+      } else {
+        // Add to favorites (saving a concise version of the object to save space)
+        const movieToSave = {
+          id: item.id,
+          title: movie?.title || item.title,
+          poster_path: movie?.poster_path || item.poster_path,
+        };
+        favouriteMovies.push(movieToSave);
+      }
+
+      await AsyncStorage.setItem(
+        "@favourite_movies",
+        JSON.stringify(favouriteMovies),
+      );
+      toggleFavourite(!isFavourite);
+    } catch (error) {
+      console.log("Error toggling favourite status:", error);
+    }
+  };
 
   const getMovieDetails = async (id) => {
     // Parametreyi parantez içine alın
@@ -92,10 +135,7 @@ export default function MovieScreen() {
           <TouchableOpacity onPress={() => navigation.goBack()} className="p-1">
             <ChevronLeftIcon size="30" strokeWidth={2.5} color="white" />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => toggleFavourite(!isFavourite)}
-            className="p-1"
-          >
+          <TouchableOpacity onPress={handleToggleFavourite} className="p-1">
             <HeartIcon
               size="30"
               strokeWidth={2}

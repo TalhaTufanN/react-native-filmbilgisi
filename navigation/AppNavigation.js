@@ -11,6 +11,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import FavouritesScreen from "../screens/FavouritesScreen";
 import CustomDrawerContent from "./CustomDrawerContent";
 import SettingsScreen from "../screens/SettingsScreen";
+import SeeAllScreen from "../screens/SeeAllScreen";
 import {
   HomeIcon,
   UserIcon,
@@ -43,6 +44,11 @@ function StackNavigator() {
         options={{ headerShown: false }}
         component={SearchScreen}
       />
+      <Stack.Screen
+        name="SeeAll"
+        options={{ headerShown: false }}
+        component={SeeAllScreen}
+      />
     </Stack.Navigator>
   );
 }
@@ -71,7 +77,7 @@ export default function AppNavigation() {
           options={{
             headerShown: false,
             drawerIcon: ({ color, size }) => (
-              <HomeIcon size={size} color={color} /> 
+              <HomeIcon size={size} color={color} />
             ),
           }}
         />
@@ -80,7 +86,7 @@ export default function AppNavigation() {
           component={ProfileScreen}
           options={{
             drawerIcon: ({ color, size }) => (
-              <UserIcon size={size} color={color} /> 
+              <UserIcon size={size} color={color} />
             ),
           }}
         />
@@ -89,7 +95,7 @@ export default function AppNavigation() {
           component={FavouritesScreen}
           options={{
             drawerIcon: ({ color, size }) => (
-              <StarIcon size={size} color={color} /> 
+              <StarIcon size={size} color={color} />
             ),
           }}
         />
@@ -98,7 +104,7 @@ export default function AppNavigation() {
           component={SettingsScreen}
           options={{
             drawerIcon: ({ color, size }) => (
-              <Cog6ToothIcon size={size} color={color} /> 
+              <Cog6ToothIcon size={size} color={color} />
             ),
           }}
         />

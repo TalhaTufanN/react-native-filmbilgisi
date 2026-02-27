@@ -22,7 +22,18 @@ export default function MovieList({ title, data, hideSeeAll }) {
       <View className="flex-row justify-between items-center bg-neutral-900 py-2 border-b-2 border-t-2 border-neutral-800">
         <Text className="text-white text-xl font-black mx-5 ">{title}</Text>
         {!hideSeeAll && (
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              if (navigation.push) {
+                navigation.push("SeeAll", { title, data });
+              } else {
+                navigation.navigate("Ana Sayfa", {
+                  screen: "SeeAll",
+                  params: { title, data },
+                });
+              }
+            }}
+          >
             <Text style={styles.text} className="mx-2">
               Tümünü Gör
             </Text>
@@ -39,7 +50,16 @@ export default function MovieList({ title, data, hideSeeAll }) {
           return (
             <TouchableWithoutFeedback
               key={index}
-              onPress={() => navigation.push("Movie", item)}
+              onPress={() => {
+                if (navigation.push) {
+                  navigation.push("Movie", item);
+                } else {
+                  navigation.navigate("Ana Sayfa", {
+                    screen: "Movie",
+                    params: item,
+                  });
+                }
+              }}
             >
               <View className="space-y-1 mr-4 items-center">
                 <Image

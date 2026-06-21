@@ -20,6 +20,7 @@ import {
   fetchMovieCredits,
   fetchMovieDetails,
   fetchSimilarMovies,
+  fetchMovieWatchProviders,
   image500,
 } from "../api/moviedb";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -35,12 +36,15 @@ export default function MovieScreen() {
   const [similarMovies, setSimilarMovies] = useState([1, 2, 3, 4, 5]);
   const [loading, setLoading] = useState(false);
   const [movie, setMovie] = useState();
+  const [providers, setProviders] = useState([]);
+
   useEffect(() => {
     // console.log('itemid: ',item.id)
     setLoading(true);
     getMovieDetails(item.id);
     getMovieCredits(item.id);
     getSimilarMovies(item.id);
+    getWatchProviders(item.id);
     checkFavouriteStatus(item.id);
   }, [item]);
 
@@ -124,6 +128,17 @@ export default function MovieScreen() {
     }
   };
 
+  const getWatchProviders = async (id) => {
+    try {
+      const data = await fetchMovieWatchProviders(id);
+      if (data && data.results && data.results.TR && data.results.TR.flatrate) {
+        setProviders(data.results.TR.flatrate);
+      }
+    } catch (error) {
+      console.error("Watch providers fetch error: ", error);
+    }
+  };
+
   return (
     <ScrollView
       contentContainerStyle={{ paddingBottom: 20 }}
@@ -200,6 +215,25 @@ export default function MovieScreen() {
           {movie?.overview}
         </Text>
       </View>
+
+      {/* İzleme Platformları */}
+      {providers.length > 0 && (
+        <View className="mx-4 mt-4 space-y-2">
+          <Text className="text-white text-lg font-bold">Nereden İzleyebilirim?</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row mt-2">
+            {providers.map((provider, index) => (
+              <View key={index} className="mr-3 items-center">
+                <Image
+                  source={{ uri: image500(provider.logo_path) }}
+                  className="w-12 h-12 rounded-xl"
+                />
+                <Text className="text-neutral-400 text-xs mt-1 font-semibold">{provider.provider_name}</Text>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+      )}
+
       {/* Oyuncular */}
       {cast.length > 0 && <Cast navigation={navigation} cast={cast} />}
       {/* Benzer filmler */}

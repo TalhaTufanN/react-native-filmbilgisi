@@ -5,6 +5,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "../screens/HomeScreen";
 import React from "react";
 import MovieScreen from "../screens/MovieScreen";
+import TvScreen from "../screens/TvScreen";
 import PersonScreen from "../screens/PersonScreen";
 import SearchScreen from "../screens/SearchScreen";
 import ProfileScreen from "../screens/ProfileScreen";
@@ -33,6 +34,11 @@ function StackNavigator() {
         name="Movie"
         options={{ headerShown: false }}
         component={MovieScreen}
+      />
+      <Stack.Screen
+        name="Tv"
+        options={{ headerShown: false }}
+        component={TvScreen}
       />
       <Stack.Screen
         name="Person"

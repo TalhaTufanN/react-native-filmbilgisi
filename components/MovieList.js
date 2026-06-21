@@ -15,7 +15,7 @@ import { fallbackMoviePoster, image185 } from "../api/moviedb";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function MovieList({ title, data, hideSeeAll }) {
+export default function MovieList({ title, data, hideSeeAll, isTv }) {
   const navigation = useNavigation();
   return (
     <View className="mb-8 space-y-4">
@@ -25,11 +25,11 @@ export default function MovieList({ title, data, hideSeeAll }) {
           <TouchableOpacity
             onPress={() => {
               if (navigation.push) {
-                navigation.push("SeeAll", { title, data });
+                navigation.push("SeeAll", { title, data, isTv });
               } else {
                 navigation.navigate("Ana Sayfa", {
                   screen: "SeeAll",
-                  params: { title, data },
+                  params: { title, data, isTv },
                 });
               }
             }}
@@ -51,11 +51,12 @@ export default function MovieList({ title, data, hideSeeAll }) {
             <TouchableWithoutFeedback
               key={index}
               onPress={() => {
+                const screenName = isTv ? "Tv" : "Movie";
                 if (navigation.push) {
-                  navigation.push("Movie", item);
+                  navigation.push(screenName, item);
                 } else {
                   navigation.navigate("Ana Sayfa", {
-                    screen: "Movie",
+                    screen: screenName,
                     params: item,
                   });
                 }
@@ -76,9 +77,9 @@ export default function MovieList({ title, data, hideSeeAll }) {
                 />
 
                 <Text className="text-neutral-300">
-                  {(item?.title || "").length > 15
-                    ? (item?.title || "").slice(0, 15) + "..."
-                    : item?.title || ""}
+                  {((item?.title || item?.name) || "").length > 15
+                    ? ((item?.title || item?.name) || "").slice(0, 15) + "..."
+                    : (item?.title || item?.name) || ""}
                 </Text>
               </View>
             </TouchableWithoutFeedback>

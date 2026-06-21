@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>🎬 FilmovieTR</h1>
+  <h1>🎬 Ne İzlesek?</h1>
   <p>A beautiful and modern React Native movie streaming and info application built with <b>Expo</b>, <b>Nativewind (TailwindCSS)</b>, and <b>The Movie Database (TMDB) API</b>.</p>
 
   <p>
@@ -63,6 +63,6 @@
 
 **Kısa bir bakış:**
 <br/>
-[![FilmovieTR Tanıtımı](https://img.youtube.com/vi/jvCiZA9uYTk/0.jpg)](https://youtube.com/shorts/jvCiZA9uYTk?feature=share)
+[![Ne İzlesek Tanıtımı](https://img.youtube.com/vi/jvCiZA9uYTk/0.jpg)](https://youtube.com/shorts/jvCiZA9uYTk?feature=share)
 
 ---

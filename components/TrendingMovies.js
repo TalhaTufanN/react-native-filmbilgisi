@@ -15,17 +15,17 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const ios = Platform.OS == "ios";
 
-export default function TrendingMovies({ data }) {
+export default function TrendingMovies({ data, isTv }) {
   const navigation = useNavigation();
   const handleClick = (item) => {
-    navigation.navigate("Movie", item);
+    navigation.navigate(isTv ? "Tv" : "Movie", item);
   };
 
   return (
     <View justifyContent="center">
       <View className="bg-neutral-900 border-b-2 border-y-neutral-800">
         <Text className="text-cyan-50 text-xl p-1 font-black self-center">
-          Trend Filmler
+          {isTv ? "Trend Diziler" : "Trend Filmler"}
         </Text>
       </View>
 

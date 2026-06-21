@@ -38,3 +38,7 @@ yarn-error.*
 .env
 
 eas.json
+
+# Native generated folders
+android/
+ios/

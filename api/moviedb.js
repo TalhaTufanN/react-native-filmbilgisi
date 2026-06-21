@@ -7,6 +7,11 @@ const upcomingMoviesEndpoint = `${apiBaseUrl}/movie/upcoming?api_key=${API_KEY}`
 const topRatedMoviesEndpoint = `${apiBaseUrl}/movie/top_rated?api_key=${API_KEY}`;
 const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${API_KEY}`;
 
+// TV Endpoints
+const trendingTvEndpoint = `${apiBaseUrl}/trending/tv/day?api_key=${API_KEY}`;
+const topRatedTvEndpoint = `${apiBaseUrl}/tv/top_rated?api_key=${API_KEY}`;
+const searchTvEndpoint = `${apiBaseUrl}/search/tv?api_key=${API_KEY}`;
+
 // dynamic
 
 const movieDetailsEndpoint = (id) =>
@@ -20,6 +25,19 @@ const personDetailsEndpoint = (id) =>
   `${apiBaseUrl}/person/${id}?api_key=${API_KEY}`;
 const personMoviesEndpoint = (id) =>
   `${apiBaseUrl}/person/${id}/movie_credits?api_key=${API_KEY}`;
+
+const tvDetailsEndpoint = (id) =>
+  `${apiBaseUrl}/tv/${id}?api_key=${API_KEY}`;
+const tvCreditsEndpoint = (id) =>
+  `${apiBaseUrl}/tv/${id}/credits?api_key=${API_KEY}`;
+const similarTvEndpoint = (id) =>
+  `${apiBaseUrl}/tv/${id}/similar?api_key=${API_KEY}`;
+
+// Watch Providers
+const movieWatchProvidersEndpoint = (id) =>
+  `${apiBaseUrl}/movie/${id}/watch/providers?api_key=${API_KEY}`;
+const tvWatchProvidersEndpoint = (id) =>
+  `${apiBaseUrl}/tv/${id}/watch/providers?api_key=${API_KEY}`;
 
 // 'https://api.themoviedb.org/3/movie/movie_id',
 
@@ -88,4 +106,32 @@ export const fetchPersonMovies = (id) => {
 };
 export const SearchMovies = (params) => {
   return apiCall(searchMoviesEndpoint, params);
+};
+
+// TV Series Exports
+export const fetchTrendingTv = () => {
+  return apiCall(trendingTvEndpoint);
+};
+export const fetchTopRatedTv = () => {
+  return apiCall(topRatedTvEndpoint);
+};
+export const fetchTvDetails = (id) => {
+  return apiCall(tvDetailsEndpoint(id));
+};
+export const fetchTvCredits = (id) => {
+  return apiCall(tvCreditsEndpoint(id));
+};
+export const fetchSimilarTv = (id) => {
+  return apiCall(similarTvEndpoint(id));
+};
+export const searchTv = (params) => {
+  return apiCall(searchTvEndpoint, params);
+};
+
+// Watch Providers Exports
+export const fetchMovieWatchProviders = (id) => {
+  return apiCall(movieWatchProvidersEndpoint(id));
+};
+export const fetchTvWatchProviders = (id) => {
+  return apiCall(tvWatchProvidersEndpoint(id));
 };
